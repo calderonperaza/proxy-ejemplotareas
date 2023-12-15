@@ -65,7 +65,22 @@ http://localhost
 http://backenddocker.juanperez.io
 http://frontenddocker.juanperez.io
 ```
+- _Pruebas si suceden errores:_ Podemos revisar si el archivo de configuracion se ha guardado correctamente, primero revisar si la ruta de nuestro contenedor esta correcta en el docker compose volumen, y el segundo es para ver si en verdad el contenedor tiene nuestro archivo nginxbasic.conf.
+
+Compruebe el contenido del config por defecto de nginx, note la ultima linea el include, observe la ruta que aparece ahi, en esa ruta es donde el docker-compose en el volumen tiene que cargar el archivo de configuracion.
+```sh
+sudo docker exec proxy-nginx cat /etc/nginx/nginx.conf
+```
+
+Verifique que el archivo de configuracion se subio al contenedor.
+```sh
+sudo docker exec proxy-nginx cat /etc/nginx/conf.d/default.conf
+```
+Nota: El frontend va a mostrar un error porque debe escribirse la url del backend y volverse a compilar, pero lo haremos ya cuando tengamos el certificado
+
+### Paso 3: Aplicar el certificados
 
 
 
-### Paso 3: Aplicar el certificado y habilitar HTTPS
+
+### Paso 3: Configurar la URL del FrontEnd
