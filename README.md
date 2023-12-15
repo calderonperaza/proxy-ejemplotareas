@@ -33,7 +33,7 @@ Una vez levantado nginx, puede imprimir la ubicacion del archivo de configuracio
 
 ```sh
 sudo docker exec nginx-proxy nginx -t
-sudo docker exect nginx-proxy cat /etc/nginx/nginx.conf
+sudo docker exec nginx-proxy cat /etc/nginx/nginx.conf
 ```
 
 ## Renovar certificado
