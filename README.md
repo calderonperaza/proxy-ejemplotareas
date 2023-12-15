@@ -14,7 +14,7 @@ A continuacion describimos los archivos y carpetas que se utilizan.
 
 | Archivo/Carpeta | Descripcion |
 | ------ | ------ |
-| data | Almacena toda la data y configuracion de cerbot|
+| data | Carpeta que almacena toda la data y certificados de cerbot|
 | docker-compose.yml | Tiene el archivo para que docker compose cree y levante los servicios |
 | nginx.conf | Archivo con la configuración de Nginx que luego será cargado al contenedor |
 | README | El archivo readme |
@@ -44,5 +44,8 @@ Como no sabemos cuando se vencerá lo que se hace es ejecutar la renovacion toda
 
 Esto se debe cargar en el Cron del servidor para que se haga de forma automatica
 
+## Guia a Desarrollar
+
+#Paso 1: Levantando los servicios
 
 
