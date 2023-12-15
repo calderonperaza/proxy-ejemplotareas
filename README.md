@@ -35,3 +35,14 @@ Una vez levantado nginx, puede imprimir la ubicacion del archivo de configuracio
 sudo docker exec nginx-proxy nginx -t
 sudo docker exect nginx-proxy cat /etc/nginx/nginx.conf
 ```
+
+## Renovar certificado
+Para renovar el certificado se debe ejecutar un comando en el contenedor cerbot, y eso puede automatizarse colocandolo dentro del Cron.
+
+Como no sabemos cuando se vencerá lo que se hace es ejecutar la renovacion todas las noches, si el certificado no se ha vencido no pasará nada, pero si se ha vencido se renovará. Y luego se reinicia el contenedor nginx para que tome el nuevo certificado.
+
+
+Esto se debe cargar en el Cron del servidor para que se haga de forma automatica
+
+
+
