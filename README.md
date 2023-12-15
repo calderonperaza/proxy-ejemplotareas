@@ -35,6 +35,7 @@ Una vez levantado nginx, puede imprimir la ubicacion del archivo de configuracio
 sudo docker exec proxy-nginx nginx -t
 sudo docker exec proxy-nginx cat /etc/nginx/nginx.conf
 ```
+Nota que el contenedor tiene un archivo de configuración por defecto, en dicho archivo hay un include para cargar los archivos encontrados en /etc/nginx/conf.d/ ahi se pueden cargar archivos, ahi es donde subimos nuestro archivo de configuración empleando volumenes en el docker compose.
 
 ## Renovar certificado
 Para renovar el certificado se debe ejecutar un comando en el contenedor cerbot, y eso puede automatizarse colocandolo dentro del Cron.
@@ -80,7 +81,27 @@ Nota: El frontend va a mostrar un error porque debe escribirse la url del backen
 
 ### Paso 3: Aplicar el certificados
 
+Ahora vamos a configurar el certificado SSL para que se pueda acceder a los servicios por HTTPS, para ello vamos a usar Cerbot, el cual es un cliente de Let's Encrypt, que es una entidad que emite certificados SSL gratuitos.
+
+- _Crear el archivo nginx.conf:_ Este archivo es similar al anterior(nginxbasic.comf), pero ahora se configura para que escuche en el puerto 443 y se agregan las directivas para que se pueda usar el certificado SSL, en este archivo se configura el certificado SSL y se configura el proxy inverso para que redireccione a los servicios de backend y frontend. Pero primero vamos a obtener el certificado SSL con Cerbot, luego vamos a habilitar el SSL.
+- _Colocar el .well-known/acme-challenge/:_ Configurar los DNS en el puerto 80 para que atienda a la peticion de letsencrypt. eso se hace colocando la petición en el archivo de configuración de nginx, en el bloque server que tiene el puerto 80, se agrega la directiva location /.well-known/acme-challenge/ y se configura para que atienda a la petición y la redireccione al contenedor de cerbot.
+- _Obtener los Certificados SSL invocando Cerbot:_ Ahora vamos a obtener los certificados SSL con Cerbot, para ello vamos a crear un servicio en el docker-compose.yml, este servicio va a tener la imagen de Cerbot, y va a tener un volumen para que se guarde la data de cerbot, y va a tener un extra-host para que pueda invocar el DNS del servidor host. Luego vamos a levantar el servicio con docker compose up -d, y vamos a ejecutar el comando para que cerbot obtenga los certificados SSL, luego vamos a detener el servicio de cerbot. Levante el docker compose con el nginx.conf teniendo la parte de SSL comentada, luego vamos a obtener los certificados. 
+- _Obtener los Certificados SSL invocando Cerbot Parte 2:_ Se ejecutar un comando para obtener los certificados, se debe ejecutar un comando para cada DNS
+```sh
+docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d backenddocker.juanperez.io
+docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d frontenddocker.juanperez.io
+```
+- _Habilitar SSL en el nginx.conf:_ Se descomenta la parte de SSL para así habilitar el SSL para nuestros DNS, debe reiniciar el contenedor de nginx para que tome el nuevo archivo de configuración.
+- _Probar que todo funcione bien dns https:_ Pruebe que todo funcione bien y que pueda acceder a los servicios usando los dns sobre https.
 
 
+### Paso 3: Configurar la renovacion del certificado
 
-### Paso 3: Configurar la URL del FrontEnd
+Ahora vamos a configurar la renovacion del certificado, para ello vamos a usar Cron, el cual es un servicio que permite ejecutar comandos en un horario especifico. Agruegue estas lineas al Cron Root
+
+```sh
+0 0,12 * * * docker compose run --rm certbot renew
+5 0 * * * docker exec proxy-nginx nginx -s reload
+```
+
+Recuerde tambien configurar el firewall para solo permitir el trafico por los puertos 80 y 443, y el puerto 22 para ssh, y también para permitir todo el trafico hacia la interfaz de docker0.
