@@ -95,7 +95,7 @@ docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/cert
 - _Probar que todo funcione bien dns https:_ Pruebe que todo funcione bien y que pueda acceder a los servicios usando los dns sobre https.
 
 
-### Paso 3: Configurar la renovacion del certificado
+### Paso 4: Configurar la renovacion del certificado
 
 Ahora vamos a configurar la renovacion del certificado, para ello vamos a usar Cron, el cual es un servicio que permite ejecutar comandos en un horario especifico. Agruegue estas lineas al Cron Root
 
@@ -109,4 +109,5 @@ Recuerde tambien configurar el firewall para solo permitir el trafico por los pu
 ### Referencias
 
 https://mindsers.blog/en/post/https-using-nginx-certbot-docker/
+
 https://www.joncom.be/projects/docker-nginx-letsencrypt-setup/
