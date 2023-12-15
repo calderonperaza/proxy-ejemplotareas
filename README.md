@@ -1,4 +1,4 @@
-## _Proxy Inverso con Nginx, Cerbot y Docker Compose_
+# _Proxy Inverso con Nginx, Cerbot y Docker Compose_
 
 ### Indicaciones
 Se asume que usted ya ha levantado los servicios de Backend y de Fronted con Docker Compose, en este repositorio se explica y se contiene los archivos necesarios para levantar el Proxy y para Obtener los certificados SSL con Cerbot.
@@ -46,6 +46,10 @@ Esto se debe cargar en el Cron del servidor para que se haga de forma automatica
 
 ## Guia a Desarrollar
 
-# Paso 1: Levantando los servicios
+### Paso 1: Levantando los servicios
+Vamos a levantar con docker compose los servicios de front y de backend y configurar el dns
+
+- _Configurar DNS:_ Esto es lo primero que debemos hacer porque tarda varios minutos en propagarse los cambios, entonces va entrar en su administrador de DNS y va crear 2 subdominios que resuelvan la direccion IP de su servidor virtual: `backenddocker.juanperez.me` y `frontenddocker.juanperez.me` un registro tipo A que resuelva la direccion Ip de su servidor en digital ocean o en Azure.
+- _Levantar el Backend:_ Ahora va a clonar el repositorio del backend el cual contiene el archivo Dockerfile y docker-compose, entre en dicha carpeta y va a levantar los servicios ejecutando `docker compose up -d`
 
 
