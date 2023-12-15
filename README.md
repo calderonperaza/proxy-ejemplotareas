@@ -105,3 +105,8 @@ Ahora vamos a configurar la renovacion del certificado, para ello vamos a usar C
 ```
 
 Recuerde tambien configurar el firewall para solo permitir el trafico por los puertos 80 y 443, y el puerto 22 para ssh, y también para permitir todo el trafico hacia la interfaz de docker0.
+
+### Referencias
+
+https://mindsers.blog/en/post/https-using-nginx-certbot-docker/
+https://www.joncom.be/projects/docker-nginx-letsencrypt-setup/
