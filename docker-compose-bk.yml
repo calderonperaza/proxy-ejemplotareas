@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  webproxy:
+    image: nginx:stable
+    container_name: nginx-proxy 
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./data/certbot/conf/:/etc/nginx/ssl/:ro
+      - ./data/certbot/www:/var/www/certbot/:ro
+    network_mode: bridge
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: certbot
+    volumes:
+      - ./data/certbot/conf/:/etc/letsencrypt/:rw
+      - ./data/certbot/www/:/var/www/certbot/:rw
+    network_mode: bridge
+
+#recuerda ponerle nombre a las imagenes
+#container_name: proxy-nginx
+#container_name: cerbot
+#prueba quitar el network_mode: bridge en teoria es el valor por defecto

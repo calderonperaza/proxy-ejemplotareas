@@ -51,5 +51,21 @@ Vamos a levantar con docker compose los servicios de front y de backend y config
 
 - _Configurar DNS:_ Esto es lo primero que debemos hacer porque tarda varios minutos en propagarse los cambios, entonces va entrar en su administrador de DNS y va crear 2 subdominios que resuelvan la direccion IP de su servidor virtual: `backenddocker.juanperez.me` y `frontenddocker.juanperez.me` un registro tipo A que resuelva la direccion Ip de su servidor en digital ocean o en Azure.
 - _Levantar el Backend:_ Ahora va a clonar el repositorio del backend el cual contiene el archivo Dockerfile y docker-compose, entre en dicha carpeta y va a levantar los servicios ejecutando `docker compose up -d`
+- _Levantar el Frontend:_ Ahora va a clonar frontend el cual contiene el archivo Dockerfile y docker-compose, entre en dicha carpeta y va a levantar los servicios ejecutando `docker compose up -d`
+- _Probar los servicios:_ Pruebe que el backend y el frontend esten funcionando, primero el backend el cual se accede en: `http://localhost:3000`, el frontend debe mostrarse con un error, debido a que el front necesita tener el DNS del backend definido y compilado en la imagen docker, pero basta con que se muestre `http://localhost:9080`.
+
+### Paso 2: Creando el Proxy-Inverso
+El servicio de proxy inverso se define en el presente repositorio y utiliza Nginx para levantarlo, va encontrar dos archivos CONF en este paso usaremos el archivo.
+
+- _Cree el archivo nginxbasic.conf:_ en este archivo tenemos la configuracion funcional sobre HTTP, mostraremos el saludo de nginx cuando lleguen peticiones localhost, y vamos a redireccionar en proxy inverso cuando lleguen las peticiones por nuestros DNS, debe poner en el archivo los dns definidos. Este archivo tiene tres bloques server.
+- _Crear y levantar el docker-compose:_ Se va crear un archivo docker-compose.yml donde se van a definir y crear un servicio para el proxy con nginx. El extra-host se usa para que el contenedor pueda invocar la ip del Servidor Host para poder redireccionar al puerto que tiene el front y el backend. En volumenes se agrega el archivo nginxbasic.conf al nginx. Luego levantamos con docker compose up -d
+- _Probar que todo funcione bien dns http:_ Pruebe que todo funcione bien y que pueda acceder a los servicios usando los dns sobre http.
+```sh
+http://localhost
+http://backenddocker.juanperez.io
+http://frontenddocker.juanperez.io
+```
 
 
+
+### Paso 3: Aplicar el certificado y habilitar HTTPS
