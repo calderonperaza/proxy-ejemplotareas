@@ -46,6 +46,6 @@ Esto se debe cargar en el Cron del servidor para que se haga de forma automatica
 
 ## Guia a Desarrollar
 
-#Paso 1: Levantando los servicios
+# Paso 1: Levantando los servicios
 
 
