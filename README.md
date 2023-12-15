@@ -79,7 +79,7 @@ sudo docker exec proxy-nginx cat /etc/nginx/conf.d/default.conf
 ```
 Nota: El frontend va a mostrar un error porque debe escribirse la url del backend y volverse a compilar, pero lo haremos ya cuando tengamos el certificado
 
-### Paso 3: Aplicar el certificados
+### Paso 3: Aplicar los certificados
 
 Ahora vamos a configurar el certificado SSL para que se pueda acceder a los servicios por HTTPS, para ello vamos a usar Cerbot, el cual es un cliente de Let's Encrypt, que es una entidad que emite certificados SSL gratuitos.
 
