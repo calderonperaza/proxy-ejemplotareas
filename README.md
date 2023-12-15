@@ -20,3 +20,18 @@ A continuacion describimos los archivos y carpetas que se utilizan.
 | README | El archivo readme |
 
 
+## Comandos
+Para levantar el docker compose se ejecuta.
+
+```sh
+sudo docker compose up -d
+sudo docker compose ps
+sudo docker compose down
+```
+
+Una vez levantado nginx, puede imprimir la ubicacion del archivo de configuracion para verificar la ruta del volumen del compose. Ya con la ruta del conf puedes verificar si se cargó correctamente el conf, esto se hace porque algunas versiones de nginx tienen el archivo de configuración en diferente ruta
+
+```sh
+sudo docker exec nginx-proxy nginx -t
+sudo docker exect nginx-proxy cat /etc/nginx/nginx.conf
+```
