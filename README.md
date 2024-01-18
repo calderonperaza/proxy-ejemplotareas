@@ -51,7 +51,7 @@ Esto se debe cargar en el Cron del servidor para que se haga de forma automatica
 Vamos a levantar con docker compose los servicios de front y de backend y configurar el dns
 
 - _Configurar DNS:_ Esto es lo primero que debemos hacer porque tarda varios minutos en propagarse los cambios, entonces va entrar en su administrador de DNS y va crear 2 subdominios que resuelvan la direccion IP de su servidor virtual: `backenddocker.juanperez.me` y `frontenddocker.juanperez.me` un registro tipo A que resuelva la direccion Ip de su servidor en digital ocean o en Azure.
-- _Levantar el Backend:_ Ahora va a clonar el repositorio del backend el cual contiene el archivo Dockerfile y docker-compose, entre en dicha carpeta y va a levantar los servicios ejecutando `docker compose up -d`
+- _Levantar el Backend:_ Ahora va a clonar el repositorio del backend el cual contiene el archivo Dockerfile y docker-compose, entre en dicha carpeta y va a levantar los servicios ejecutando `docker compose up -d` Lo recomendable es que se tenga dockerizado y que se levante el backend a partir de una imagen en docker hub, si se usa docker hub, no es necesario clonar el repositorio en el servidor de despliegue, puesto que la apps ya esta dockerizada.
 - _Levantar el Frontend:_ Ahora va a clonar frontend el cual contiene el archivo Dockerfile y docker-compose, entre en dicha carpeta y va a levantar los servicios ejecutando `docker compose up -d`
 - _Probar los servicios:_ Pruebe que el backend y el frontend esten funcionando, primero el backend el cual se accede en: `http://localhost:3000`, el frontend debe mostrarse con un error, debido a que el front necesita tener el DNS del backend definido y compilado en la imagen docker, pero basta con que se muestre `http://localhost:9080`.
 
