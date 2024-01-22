@@ -100,7 +100,7 @@ docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/cert
 Ahora vamos a configurar la renovacion del certificado, para ello vamos a usar Cron, el cual es un servicio que permite ejecutar comandos en un horario especifico. Agruegue estas lineas al Cron Root
 
 ```sh
-0 0,12 * * * docker compose run --rm certbot renew
+0 0,12 * * * docker compose -f /home/proxy/docker-compose.yml run --rm certbot renew
 5 0 * * * docker exec proxy-nginx nginx -s reload
 ```
 
