@@ -20,3 +20,7 @@ services:
     volumes:
       - ./data/certbot/conf/:/etc/letsencrypt/:rw
       - ./data/certbot/www/:/var/www/certbot/:rw
+#comentario:
+# el volumen ./nginx.conf:/etc/nginx/conf.d/default.conf:ro puede reemplazarse por dos archivos separados
+#uno que configure el back y otro el front basta que este dentro de la carpeta conf.d y nginx lo va a ejecutar
+# - ./backend.conf:/etc/nginx/conf.d/backend.conf:ro
